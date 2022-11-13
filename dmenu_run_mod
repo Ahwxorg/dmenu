@@ -1,6 +1,6 @@
 #!/bin/sh
 export _JAVA_AWT_WM_NONREPARENTING=1
-exec $(dmenu_path | dmenu "$@" -p zsh -l 50)
+exec $(dmenu_path | dmenu "$@" -Y 540 -W 960 -h 100 -c -hp 10 -h 10 -p /bin/zsh -l 50)
 
 # Uncomment for the NAVHISTORY patch (and remove the exec above)
 #dmenu_path | dmenu -H "${XDG_CACHE_HOME:-$HOME/.cache/}/dmenu_run.hist" "$@" | ${SHELL:-"/bin/sh"} &
