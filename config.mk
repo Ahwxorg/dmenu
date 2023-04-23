@@ -1,5 +1,5 @@
 # dmenu version
-VERSION = 5.0
+VERSION = 5.2
 
 # paths
 PREFIX = /usr/local
@@ -17,13 +17,24 @@ FREETYPELIBS = -lfontconfig -lXft
 FREETYPEINC = /usr/include/freetype2
 # OpenBSD (uncomment)
 #FREETYPEINC = $(X11INC)/freetype2
+#MANPREFIX = ${PREFIX}/man
+
+# uncomment on RHEL for strcasecmp
+#EXTRAFLAGS=-D_GNU_SOURCE
+
+# Uncomment this for the alpha patch / ALPHA_PATCH
+XRENDER = -lXrender
+
+# Uncomment for the pango patch / PANGO_PATCH
+#PANGOINC = `pkg-config --cflags xft pango pangoxft`
+#PANGOLIB = `pkg-config --libs xft pango pangoxft`
 
 # includes and libs
-INCS = -I$(X11INC) -I$(FREETYPEINC)
-LIBS = -L$(X11LIB) -lX11 $(XINERAMALIBS) $(FREETYPELIBS) -lXrender
+INCS = -I$(X11INC) -I$(FREETYPEINC) ${PANGOINC}
+LIBS = -L$(X11LIB) -lX11 $(XINERAMALIBS) $(FREETYPELIBS) -lm $(XRENDER) ${PANGOLIB}
 
 # flags
-CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS)
+CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS) $(EXTRAFLAGS)
 CFLAGS   = -std=c99 -pedantic -Wall -Os $(INCS) $(CPPFLAGS)
 LDFLAGS  = $(LIBS)
 
